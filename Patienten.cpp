@@ -1,10 +1,10 @@
 #include"Patienten.h"
 #include<iostream>
-void Patienten::setPatientennummer() {
-    patientennummer = listnummer;
-    listnummer++;
+void Patienten::setPatientenNummer() {
+    patientennummer = InitialListNummer;
+    InitialListNummer++;
 }
-int Patienten::getPatientennummer() {
+int Patienten::getPatientenummer() {
     return patientennummer;
 }
 
@@ -13,7 +13,7 @@ void Patienten::PrintAllInfo() {
     log("Geburtsdatum: "<< getGeburt());
     cout << "Geschlecht: ";
     printGeschlecht();
-    printDiag();
+    printPatientenDiagnose();
     log("Behandlungsdauer(Tag): " << getBehandlungsdauer());
 }
 
@@ -38,14 +38,14 @@ string Patienten::getVollname() {
 string Patienten::getGeburt() {
     return geburtsdatum;
 }
-diagnose Patienten::getDiag() {
-    return diag;
+diagnose Patienten::getPatientenDiagnose() {
+    return PatientenDiagnose;
 }
 int Patienten::getBehandlungsdauer() {
     return behandlungsdauer;
 }
 void Patienten::DiagZuDauer() {
-    switch (diag) {
+    switch (PatientenDiagnose) {
         case simulant:
             behandlungsdauer = 2;
         break;
@@ -60,8 +60,8 @@ void Patienten::DiagZuDauer() {
         break;
     }
 }
-void Patienten::printDiag() {
-    switch (diag) {
+void Patienten::printPatientenDiagnose() {
+    switch (PatientenDiagnose) {
         case simulant:
            log("Diagnose: Simulant");
         break;
@@ -82,11 +82,11 @@ void Patienten::reduceDauer(int VergehenTag) {
 }
 void Patienten::DiagzuGeheilt() {
     if(getBehandlungsdauer() <= 0) {
-        diag = geheilt;
+        PatientenDiagnose = geheilt;
         log("Der Patient " << patientennummer << " wird geheilt.");
     }
 }
-void Patienten::setGeburt() {
+void Patienten::setPatientenGeburtsdatum() {
     int randomday{};
     int randommonth{};
     int randomyear{};
@@ -124,53 +124,49 @@ void Patienten::setGeburt() {
     //cout << randomday << "." << randommonth << "." << randomyear << endl;
     geburtsdatum = std::to_string(randomday) + "." + std::to_string(randommonth) + "."+ std::to_string(randomyear);
 }
-
+string getMaleName() {
+    return firstNames_male[rand()%50];
+}
+string getLastnames() {
+    return lastNames[rand()%50];
+}
+string getFemalename() {
+    return firstNames_female[rand()%50];
+}
 void Patienten::setName(){
     int random;
     random = rand()%3;             //zufaellige Geschlecht
     gender = (geschlecht)random;
-    if(gender == mannlich) {
-        //male patienten
-        gender = mannlich;
-        random = rand()%50;
-        vorname = firstNames_male[random];
-        random = rand()%50;
-        nachname = lastNames[random];
+    if(gender == mannlich) {    //male patienten
+        vorname = getMaleName();
+        nachname = getLastnames();
     }
     if(gender == weiblich) {    // female patienten
-        gender = weiblich;
-        random = rand()%50;
-        vorname = firstNames_female[random];
-        random = rand()%50;
-        nachname = lastNames[random];
+        vorname = getFemalename();
+        nachname = getLastnames();
     }
     if(gender == divers) {
         random = rand()%2;
-        if(random == 0) {
-            random = rand()%50;
-            vorname = firstNames_male[random];
-            random = rand()%50;
-            nachname = lastNames[random];
+        if(random == 0) {    //männlicher Name
+            vorname = getMaleName();
         }
         if(random == 1) {
-            random = rand()%50;
-            vorname = firstNames_female[random];
-            random = rand()%50;
-            nachname = lastNames[random];
+            vorname = getFemalename();
         }
+        nachname = getLastnames();
     }
 }
 void Patienten::setDiag() {       //Input for random diagnose
     int random = rand()%3+0;
     switch(random) {
     case 0:
-        diag = simulant;
+        PatientenDiagnose = simulant;
         break;
     case 1:
-        diag = infektion;
+        PatientenDiagnose = infektion;
         break;
     case 2:
-        diag = fraktur;
+        PatientenDiagnose = fraktur;
         break;
     }
     DiagZuDauer();
@@ -181,16 +177,16 @@ void Patienten::DiagnoseAnpassung() {      //Diagnose Anpassung, aber wofuer bra
     cin >> choice;
     switch (choice) {
         case '1':
-            diag = simulant;
+            PatientenDiagnose = simulant;
         break;
     case '2':
-        diag = infektion;
+        PatientenDiagnose = infektion;
         break;
     case '3':
-        diag = fraktur;
+        PatientenDiagnose = fraktur;
         break;
     case 4:
-        diag = geheilt;
+        PatientenDiagnose = geheilt;
         break;
     default:
         break;

@@ -19,7 +19,7 @@ int Krankenhaus::checkPatList(){
     for
 (unsigned int i = 0; i < PatList.size(); i++) {
        PatList.at(i).PrintAllInfo();
-       log("Patientennummer " << PatList.at(i).getPatientennummer());
+       log("Patientennummer " << PatList.at(i).getPatientenummer());
        cout << "\n";
     }
     return 0;
@@ -42,7 +42,7 @@ int Krankenhaus::ZeitSimulieren(int VergehenTag) {
         PatList.at(i).DiagzuGeheilt();
     }
     for(unsigned int i{0}; i < PatList.size(); i++) {
-        if(PatList.at(i).getDiag() == geheilt) {
+        if(PatList.at(i).getPatientenDiagnose() == geheilt) {
             PatList.erase(PatList.begin() + i);
             aktuellBett++;
             i--;
@@ -55,11 +55,11 @@ int Krankenhaus::AddPatient(Patienten & pat1, int number) {
     if(number <= 0) return 0;
     for(int i = 0; i < number ; i++) {
             pat1.setName();       //random name
-            pat1.setGeburt();        //random geburtsdatum
+            pat1.setPatientenGeburtsdatum();        //random geburtsdatum
             pat1.setDiag();         //random Diagnose
             pat1.PrintAllInfo();
             if(checkRemainBett()) {         //check if we still have bed in Hospital
-            pat1.setPatientennummer();
+            pat1.setPatientenNummer();
             addPatienten(pat1);
 
         }

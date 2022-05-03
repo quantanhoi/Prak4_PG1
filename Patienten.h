@@ -13,7 +13,8 @@
 
 using namespace std;
 
-
+#define DEFAULT_BEHANDLUNGSDAUER 2
+#define INITIAL_LISTNUMMER 100000
 #define log(x) cout << x << endl;
 enum geschlecht {
     mannlich, weiblich, divers
@@ -30,40 +31,41 @@ private:
     string vorname;
     string nachname;
     string geburtsdatum;
-    diagnose diag;
+    diagnose PatientenDiagnose;
     int behandlungsdauer;
     int patientennummer;
 
-
+//set, read, update, delete
 
 public:
-    static int listnummer;         //static listnummer
+    static int InitialListNummer;         //static listnummer
     geschlecht getGeschlecht();
     void printGeschlecht();
     string getVorname();
     string getNachname();
     string getVollname();
     string getGeburt();
-    diagnose getDiag();
-    void printDiag();
+    diagnose getPatientenDiagnose();
+    void printPatientenDiagnose();
     int getBehandlungsdauer();
     void reduceDauer(int VergehenTag);
     void DiagzuGeheilt();
     void DiagZuDauer();
-    void setGeburt();        //Input fuer Geburt
+    void setPatientenGeburtsdatum();        //Input fuer Geburt
     void setName();             //Input fuer Nach- und Vorname
     void setDiag();         //Input fuer zufaellige Diagnose
     void DiagnoseAnpassung();
     void PrintAllInfo();    //Output fuer alle Infor
-    void setPatientennummer();
-    int getPatientennummer();
+    void setPatientenNummer();
+    int getPatientenummer();
+    void setGender();
 
 
     Patienten() {         //default konstruktor
-        diag = simulant;
-        behandlungsdauer = 2;
+        PatientenDiagnose = simulant;
+        behandlungsdauer = DEFAULT_BEHANDLUNGSDAUER;
     }
 };
-int Patienten::listnummer = 100000;     // funktioniert genau so wie ein globaler Variable, aber nur fuer Patienten
+int Patienten::InitialListNummer = INITIAL_LISTNUMMER;     // funktioniert genau so wie ein globaler Variable, aber nur fuer Patienten
 
 #endif // PATIENTEN_H
